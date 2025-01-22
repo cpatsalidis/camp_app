@@ -3,14 +3,15 @@ const Schema = mongoose.Schema;
 
 // Schema maps to a MongoDB collection 
 // and defines the shape of the documents 
-// within that collection
+// within that collection.
+// By default, Mongoose adds an _id property
 const CampgroundSchema = new Schema({
     title: {
         type: String,
         required: true
     },
-
     price: String,
+    image: String,
     description: String,
     location: {
         type: String,
