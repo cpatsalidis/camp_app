@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Schema maps to a MongoDB collection 
+// and defines the shape of the documents 
+// within that collection
 const CampgroundSchema = new Schema({
     title: {
         type: String,
@@ -15,5 +18,9 @@ const CampgroundSchema = new Schema({
     },
 });
 
+// Convert our CampgroundSchema
+// into a Model we can work with. 
+// Then we export it so we can require 
+// it in app.js/idnex.js
 module.exports = mongoose.model('Campground', CampgroundSchema);
 
