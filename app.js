@@ -5,6 +5,7 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const Campground = require('./models/campground');
 const morgan = require('morgan');
+const appError = require('./appError');
 
 // Connect to the database
 mongoose.connect('mongodb://localhost:27017/camp_app')
@@ -23,9 +24,11 @@ app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-app.use(morgan('tiny'));
+app.use(express.static(path.join(__dirname, 'public')))
+// app.use(morgan('tiny'));
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -40,7 +43,7 @@ app.get('/campgrounds/new', (req, res) => {
     res.render('campgrounds/new');
 });
 
-app.get('/campgrounds/:id', async (req, res) => {
+app.get('/campgrounds/:id', async (req, res, next) => {
     const { id } = req.params;
     const campground = await Campground.findById(id);
     res.render('campgrounds/show', { campground });
@@ -69,6 +72,16 @@ app.delete('/campgrounds/:id', async (req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
     res.redirect('/campgrounds');
+});
+
+app.use((err, req, res, next) => {
+    console.log(err.name);
+    next(err);
+});
+
+app.use((err, req, res, next) => {
+    const { status = 500, message = 'Something went wrong' } = err;
+    res.status(status).send(message);
 });
 
 app.listen(3000, () => {
