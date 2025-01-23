@@ -29,7 +29,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
-// app.use(morgan('tiny'));
+app.use(morgan('tiny'));
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -50,12 +50,10 @@ app.get('/campgrounds/:id', catchAsync(async (req, res) => {
     res.render('campgrounds/show', { campground });
 }));
 
-
 app.post('/campgrounds', catchAsync(async (req, res, next) => {
     const campground = new Campground(req.body.campground);
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`);
-
 }));
 
 app.get('/campgrounds/:id/edit', catchAsync(async (req, res) => {
@@ -82,7 +80,7 @@ app.all(/(.*)/, (req, res, next) => {
 
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = 'Something went wrong' } = err;
-    res.status(statusCode).send(message);
+    res.status(statusCode).render('error', { err });
 });
 
 app.listen(3000, () => {
