@@ -7,7 +7,7 @@ const Campground = require('./models/campground');
 const morgan = require('morgan');
 const ExpressError = require('./utils/ExpressError');
 const catchAsync = require('./utils/catchAsync');
-const { campgroundSchema } = require('./schemas.js');
+const { campgroundSchema, reviewSchema } = require('./schemas.js');
 const Review = require('./models/review');
 
 // Connect to the database
@@ -35,6 +35,16 @@ app.use(morgan('tiny'));
 
 function validateCampground(req, res, next) {
     const { error } = campgroundSchema.validate(req.body);
+    if (error) {
+        const message = error.details.map(el => el.message).join(',');
+        throw new ExpressError(message, 400);
+    } else {
+        next();
+    }
+}
+
+function validateReview(req, res, next) {
+    const { error } = reviewSchema.validate(req.body);
     if (error) {
         const message = error.details.map(el => el.message).join(',');
         throw new ExpressError(message, 400);
@@ -86,7 +96,7 @@ app.delete('/campgrounds/:id', catchAsync(async (req, res) => {
     res.redirect('/campgrounds');
 }));
 
-app.post('/campgrounds/:id/reviews', catchAsync(async (req, res) => {
+app.post('/campgrounds/:id/reviews', validateReview, catchAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findById(id);
     const review = new Review(req.body.review);
