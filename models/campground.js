@@ -20,6 +20,12 @@ const CampgroundSchema = new Schema({
         type: String,
         required: true
     },
+    reviews: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Review'
+        }
+    ]
 });
 
 // Convert our CampgroundSchema
