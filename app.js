@@ -9,6 +9,8 @@ const ExpressError = require('./utils/ExpressError');
 const campgrounds = require('./routes/campgrounds');
 const reviews = require('./routes/reviews');
 
+const session = require('express-session');
+
 // Connect to the database
 mongoose.connect('mongodb://localhost:27017/camp_app')
 
