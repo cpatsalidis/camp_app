@@ -34,6 +34,19 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 // app.use(morgan('tiny'));
 
+const sessionConfig = {
+    secret: 'mysecret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        // httpOnly: true, // default
+        expires: 10000,
+        maxAge: 10000
+    }
+}
+
+app.use(session(sessionConfig));
+
 app.use('/campgrounds', campgrounds);
 app.use('/campgrounds/:id/reviews', reviews);
 
