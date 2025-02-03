@@ -51,6 +51,7 @@ app.use(flash())
 
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
     next();
 });
 app.use('/campgrounds', campgrounds);
@@ -66,6 +67,7 @@ app.all(/(.*)/, (req, res, next) => {
 
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = 'Something went wrong' } = err;
+    req.flash('error', 'An error has occured.')
     res.status(statusCode).render('error', { err });
 });
 
