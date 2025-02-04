@@ -11,6 +11,7 @@ const User = require('./models/user');
 
 const campgrounds = require('./routes/campgrounds');
 const reviews = require('./routes/reviews');
+const users = require('./routes/users');
 
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -67,6 +68,8 @@ app.use((req, res, next) => {
 });
 app.use('/campgrounds', campgrounds);
 app.use('/campgrounds/:id/reviews', reviews);
+app.use('/', users);
+
 
 app.get('/', (req, res) => {
     res.render('home');
