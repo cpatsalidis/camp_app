@@ -45,13 +45,13 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         // httpOnly: true, // default
-        expires: 10000,
-        maxAge: 10000
+        expires: 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
 
 app.use(session(sessionConfig));
-app.use(flash())
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -64,6 +64,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    res.locals.currentUser = req.user;
     next();
 });
 app.use('/campgrounds', campgrounds);
