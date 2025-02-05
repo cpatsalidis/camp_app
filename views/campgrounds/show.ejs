@@ -13,10 +13,12 @@
                     <img class="img-fluid" src="<%= campground.image%>" alt="<%= campground.title%>">
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-muted">
+                    <li class="list-group-item">
                         <%= campground.location%>
                     </li>
                     <li class="list-group-item">$<%= campground.price%>/night</li>
+                    <li class="list-group-item text-muted">submitted by <%= campground.author.username%>
+                    </li>
                 </ul>
 
                 <div class="card-body">
