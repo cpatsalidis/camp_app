@@ -64,25 +64,21 @@
                     <button class="btn btn-success">Submit</button>
                 </form>
                 <div class="card mt-4">
-                    <div class="card-body">
-                        <div class="card-text">
-                            <h3>Reviews</h3>
-                            <% for(let review of campground.reviews) { %>
-                                <div>
-                                    <p>
-                                        <%= review.body %> - <%= review.rating %>/5
-                                                <form
-                                                    action="/campgrounds/<%=campground._id%>/reviews/<%=review._id%>?_method=DELETE"
-                                                    method="POST">
-                                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                                </form>
-                                    </p>
+                    <div class="card-text m-3">
+                        <% for(let review of campground.reviews) { %>
+                            <div>
+                                <p>
+                                    <%= review.body %> - <%= review.rating %>/5
+                                            <form
+                                                action="/campgrounds/<%=campground._id%>/reviews/<%=review._id%>?_method=DELETE"
+                                                method="POST">
+                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                </p>
 
-                                    <% } %>
-                                </div>
-                        </div>
+                                <% } %>
+                            </div>
                     </div>
-
                 </div>
             </div>
         </div>
