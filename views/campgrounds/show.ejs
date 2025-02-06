@@ -64,24 +64,44 @@
                         </div>
                         <button class="btn btn-success">Submit</button>
                     </form>
+
+
+
+                </div>
+                <%}%>
                     <div class="card mt-4">
-                        <div class="card-text m-3">
-                            <% for(let review of campground.reviews) { %>
-                                <div>
-                                    <p>
-                                        <%= review.body %> - <%= review.rating %>/5
+                        <h2 class="card-header">Reviews</h2>
+                        <div class="card-body">
+                            <% if (campground.reviews.length> 0) { %>
+                                <ul class="list-group">
+                                    <% for (let review of campground.reviews) { %>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>
+                                                    <%= review.author.username %>
+                                                </strong>
+                                                <p class="mb-1">
+                                                    <%= review.body %>
+                                                </p>
+                                                <span class="badge bg-primary">
+                                                    <%= review.rating %>/5
+                                                </span>
+                                            </div>
+                                            <% if (currentUser && review.author.equals(currentUser._id)) { %>
                                                 <form
-                                                    action="/campgrounds/<%=campground._id%>/reviews/<%=review._id%>?_method=DELETE"
+                                                    action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE"
                                                     method="POST">
                                                     <button class="btn btn-sm btn-danger">Delete</button>
                                                 </form>
-                                    </p>
-
+                                                <% } %>
+                                        </li>
+                                        <% } %>
+                                </ul>
+                                <% } else { %>
+                                    <p class="text-muted">No reviews yet. Be the first to review!</p>
                                     <% } %>
-                                </div>
                         </div>
                     </div>
-                </div>
-                <%}%>
+
         </div>
     </div>
