@@ -3,7 +3,7 @@ const router = express.Router({ mergeParams: true });
 const passport = require('passport');
 const catchAsync = require('../utils/catchAsync');
 const User = require('../models/user');
-const { storeReturnTo } = require('../middleware');
+const { isLoggedIn, storeReturnTo } = require('../middleware');
 
 router.get('/register', (req, res) => {
     res.render('users/register');
@@ -44,6 +44,10 @@ router.get('/logout', (req, res, next) => {
         req.flash('success', 'Goodbye!');
         res.redirect('/campgrounds');
     });
+});
+
+router.get('/profile', isLoggedIn, (req, res) => {
+    res.render('users/profile');
 });
 
 module.exports = router;
