@@ -1,4 +1,5 @@
 const Campground = require('./models/campground');
+const { campgroundSchema, reviewSchema } = require('./schemas.js');
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -22,6 +23,24 @@ module.exports.isAuthor = async (req, res, next) => {
     if (!campground.author.equals(req.user._id)) {
         req.flash('error', 'No authorization to edit this campground');
         return res.redirect(`/campgrounds/${id}`)
+    }
+    next();
+}
+
+module.exports.validateCampground = (req, res, next) => {
+    const { error } = campgroundSchema.validate(req.body);
+    if (error) {
+        const message = error.details.map(el => el.message).join(',');
+        throw new ExpressError(message, 400);
+    }
+    next();
+}
+
+module.exports.validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        const message = error.details.map(el => el.message).join(',');
+        throw new ExpressError(message, 400);
     }
     next();
 }
