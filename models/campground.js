@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 const Review = require('./review');
 const Schema = mongoose.Schema;
 
-// Schema maps to a MongoDB collection 
-// and defines the shape of the documents 
-// within that collection.
-// By default, Mongoose adds an _id property
+const ImageSchema = new Schema({
+    url: String,
+    filename: String
+});
+
 const CampgroundSchema = new Schema({
     title: {
         type: String,
@@ -15,7 +16,7 @@ const CampgroundSchema = new Schema({
         type: Number,
         required: true
     },
-    image: String,
+    image: [ImageSchema],
     description: String,
     location: {
         type: String,
