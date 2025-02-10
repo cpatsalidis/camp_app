@@ -11,7 +11,8 @@ const storage = new CloudinaryStorage({
     cloudinary,
     params: {
         folder: 'Campapp',
-        allowedFormats: ['jpeg', 'png', 'jpg']
+        allowedFormats: ['jpeg', 'png', 'jpg'],
+        transformation: [{ width: 600, height: 400, crop: 'fill' }]
     }
 });
 

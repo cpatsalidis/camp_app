@@ -12,8 +12,12 @@
         <div class="card" mb-3>
             <div class="row">
                 <div class="col-md-4">
-                    <img class="img-fluid" src="<%= campground.image %>" class="img-fluid"
-                        alt="<%= campground.title %>">
+                    <%if(campground.images.length) {%>
+                        <img class="img-fluid" alt="" src="<%=campground.images[0].url%>">
+                        <% }else {%>
+                            <img class="img-fluid" alt=""
+                                src="https://res.cloudinary.com/dtyc5nqsr/image/upload/v1739380053/Campapp/k5weoh9skpuxlnzlib9y.avif">
+                            <% } %>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
