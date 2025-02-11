@@ -1,4 +1,7 @@
 <% layout('layouts/boilerplate') %>
+    <script>
+        const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
+    </script>
 
     <div class="row">
         <div class="col-6">
@@ -24,7 +27,7 @@
                     </button>
                     <% } %>
             </div>
-
+            <div id="map"></div>
             <div class="card mb-3">
                 <div class="card-body mb-4">
                     <div class="card-body">
