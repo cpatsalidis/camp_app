@@ -19,6 +19,7 @@ const users = require('./routes/users');
 
 const session = require('express-session');
 const flash = require('connect-flash');
+const mongoSanitize = require('express-mongo-sanitize');
 
 // Connect to the database
 mongoose.connect('mongodb://localhost:27017/camp_app')
@@ -30,8 +31,8 @@ db.once('open', () => {
     console.log('Database connected');
 });
 
-
 const app = express();
+
 
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
@@ -42,6 +43,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 // app.use(morgan('tiny'));
+
 
 const sessionConfig = {
     secret: 'mysecret',
