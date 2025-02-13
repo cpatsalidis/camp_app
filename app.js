@@ -22,8 +22,8 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo');
 const mongoSanitize = require('express-mongo-sanitize');
-const dbUrl = process.env.DB_URL;
-// const dbUrl = 'mongodb://localhost:27017/camp_app'
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/camp_app';
+const port = process.env.PORT || 3000;
 
 // Connect to the database
 mongoose.connect(dbUrl)
@@ -151,6 +151,6 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err });
 });
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log('Server is running on port 3000');
 });
