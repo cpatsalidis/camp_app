@@ -22,8 +22,8 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo');
 const mongoSanitize = require('express-mongo-sanitize');
-// const dbUrl = process.env.DB_URL;
-const dbUrl = 'mongodb://localhost:27017/camp_app'
+const dbUrl = process.env.DB_URL;
+// const dbUrl = 'mongodb://localhost:27017/camp_app'
 
 // Connect to the database
 mongoose.connect(dbUrl)
