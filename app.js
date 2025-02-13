@@ -20,12 +20,14 @@ const users = require('./routes/users');
 
 const session = require('express-session');
 const flash = require('connect-flash');
+const MongoStore = require('connect-mongo');
 const mongoSanitize = require('express-mongo-sanitize');
-const dbUrl = process.env.DB_URL;
+// const dbUrl = process.env.DB_URL;
+const dbUrl = 'mongodb://localhost:27017/camp_app'
 
 // Connect to the database
-// mongoose.connect('mongodb://localhost:27017/camp_app')
-mongoose.connect(dbUrl);
+mongoose.connect(dbUrl)
+// mongoose.connect(dbUrl);
 
 // Check if the connection is successful
 const db = mongoose.connection;
@@ -92,7 +94,16 @@ app.use(
     })
 );
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'mysecret'
+    }
+});
+
 const sessionConfig = {
+    store,
     name: 'user_sess',
     secret: 'mysecret',
     resave: false,
